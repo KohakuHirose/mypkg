@@ -23,8 +23,10 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'talker = mypkg.talker:main',
-            'listener = mypkg.listener:main',
+            'typing_task_publisher = mypkg.typing_task_publisher:main',
+            'typing_speed_subscriber = mypkg.typing_speed_subscriber:main',
+            #'talker = mypkg.talker:main',
+            #'listener = mypkg.listener:main',
         ],
     },
 )
