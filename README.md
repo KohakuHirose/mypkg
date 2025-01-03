@@ -144,7 +144,8 @@ data: 'Abnormal Body Temperature Detected: 35.28 °C!'
 ```
 
 ## 実行可能なソフトウェア
-- Python 3.10
+- Python 
+    - テスト済みバージョン：3.7~3.10
 - ROS2 Foxy
 
 ## テスト環境
