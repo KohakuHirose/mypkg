@@ -5,24 +5,23 @@
 
 ## 概要
 
-このノードシステムは、健康データ（心拍数と体温）のシミュレーションを行い、異常値を検出した場合にアラートを発行する ROS 2 ノード群を提供します。  
-以下の機能を含みます:
-- **データ生成**: 心拍数と体温を一定間隔で生成。
-- **異常値の監視**: 範囲外の値を検出し、アラートをパブリッシュ。
-- **ローンチファイル**: すべてのノードを一括起動。
+このノードシステムは、ROS2を用いて健康データ（心拍数と体温）のシミュレーションを行い、異常値を検出した場合にアラートをパブリッシュ（送信）するパッケージです。。  
 
----
+- 機能
+  - **データ生成**: 心拍数と体温を一定間隔で生成。
+  - **異常値の監視**: 範囲外の値を検出し、アラートをパブリッシュ。
+  - **ローンチファイル**: すべてのノードを一括起動。
 
 ## ノードの説明
 
 ### 1. **パブリッシャーノード: HealthDataPublisher**
 
-- **役割**:
+- **役割**
   健康データ（心拍数と体温）をシミュレーションし、以下のトピックにパブリッシュします。
   - `heart_rate` (心拍数)
   - `body_temperature` (体温)
 
-- **実装のポイント**:
+- **実装のポイント**
   - 正常値をランダムに生成。
   - **20% の確率で異常値を生成**:
     - 心拍数: 40.0 ～ 120.0 bpm
@@ -31,12 +30,12 @@
 
 ### 2. **サブスクライバーノード: HealthMonitor**
 
-- **役割**:
-  健康データを購読し、異常値を検出した場合にアラートを発行します。
+- **役割**
+  健康データを受信し、異常値を検出した場合にアラートを発行します。
   - アラートは `health_alerts` トピックにパブリッシュされます。
 
-- **実装のポイント**:
-  - **正常値の範囲**:
+- **実装のポイント**
+  - **正常値の範囲**
     - 心拍数: 60.0 ～ 100.0 bpm
     - 体温: 36.0 ～ 37.5 °C
   - 範囲外の値が検出された場合:
@@ -47,8 +46,6 @@
 
 - **役割**:
   パブリッシャーノード (`health_data_publisher`) とサブスクライバーノード (`health_monitor`) を同時に起動。
-
----
 
 ## トピック
 
@@ -64,37 +61,46 @@
   - 型: `std_msgs.msg.String`
   - 異常値を検出した際のアラート。
 
----
 
 ## 実行方法
 
 ### セットアップ
 
 1. ワークスペースを作成
-``` bash
+```bash
 mkdir -p ros2_ws/src
 cd ~/ros2_ws/src/
 ```
 
 2. リポジトリをクローン
-``` bash
+```bash
 git clone https://github.com/KohakuHirose/mypkg.git
 ```
 
 3. ワークスペースをビルド
-``` bash
+```bash
 cd ~/ros2_ws
 colcon build
-source install/setup.bash
 ```
+
+4. ソースの設定
+`~/.bashrc`の末尾に2行追加
+```
+source ~/ros2_ws/install/setup.bash
+source ~/ros2_ws/install/local_setup.bash
+```
+```bash
+source ~/.bashrc
+```
+詳しくは[こちら](https://ryuichiueda.github.io/slides_marp/robosys2024/lesson8.html#22)を参考に行ってください。
 
 ### 起動
 1. ローンチファイルの実行
-``` bash
+```bash
 ros2 launch mypkg health_monitoring.launch.py
 ```
 
-例1
+実行結果：例1
 ```
 $ ros2 launch mypkg health_monitoring.launch.py
 [INFO] [launch]: All log files can be found below /home/hirose/.ros/log/2025-01-03-19-19-39-404073-DESKTOP-N1MNJB1-7651
@@ -112,11 +118,11 @@ $ ros2 launch mypkg health_monitoring.launch.py
 ```
 
 2. アラートの監視：別のターミナルで以下を実行してアラートを確認
-``` bash
+```bash
 ros2 topic echo /health_alerts
 ```
 
-例2
+実行結果：例2
 ```
 $ ros2 topic echo /health_alerts
 data: 'Abnormal Body Temperature Detected: 35.56 °C!'
@@ -138,10 +144,12 @@ data: 'Abnormal Body Temperature Detected: 35.28 °C!'
 ```
 
 ## 実行可能なソフトウェア
-- **Python**
+- Python 3.10
+- ROS2 Foxy
 
 ## テスト環境
-- **Ubuntu** 22.04 LTS
+- Ubuntu 22.04 LTS
+- Docker ryuichiueda/ubuntu22.04-ros2:latest
 
 ## ライセンス
 - このソフトウェアパッケージは，3条項BSDライセンスの下，再頒布および使用が許可されます．
