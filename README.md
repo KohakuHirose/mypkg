@@ -135,17 +135,10 @@ data: 'Abnormal Body Temperature Detected: 35.01 °C!'
 ---
 data: 'Abnormal Body Temperature Detected: 35.28 °C!'
 ---
-data: 'Abnormal Body Temperature Detected: 35.66 °C!'
----
-data: 'Abnormal Body Temperature Detected: 38.55 °C!'
----
-data: 'Abnormal Body Temperature Detected: 38.99 °C!'
----
 ```
 
 ## 実行可能なソフトウェア
 - **Python**
-	- テスト済みバージョン: 3.7~3.10
 
 ## テスト環境
 - **Ubuntu** 22.04 LTS
