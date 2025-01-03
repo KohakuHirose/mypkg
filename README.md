@@ -1,5 +1,7 @@
-# Health Monitoring System
+# Health Monitoring Syste
+
 [![test](https://github.com/KohakuHirose/mypkg/actions/workflows/test.yml/badge.svg)](https://github.com/KohakuHirose/mypkg/actions/workflows/test.yml)
+[![license](https://img.shields.io/badge/license-BSD--3--Clause-green?style=flat)](https://github.com/KohakuHirose/mypkg?tab=BSD-3-Clause-1-ov-file)
 
 ## 概要
 
@@ -69,18 +71,18 @@
 ### セットアップ
 
 1. ワークスペースを作成
-```bash
+``` bash
 mkdir -p ros2_ws/src
 cd ~/ros2_ws/src/
 ```
 
 2. リポジトリをクローン
-```bash
+``` bash
 git clone https://github.com/KohakuHirose/mypkg.git
 ```
 
 3. ワークスペースをビルド
-```bash
+``` bash
 cd ~/ros2_ws
 colcon build
 source install/setup.bash
@@ -88,14 +90,27 @@ source install/setup.bash
 
 ### 起動
 1. ローンチファイルの実行
-```bash
+``` bash
 ros2 launch mypkg health_monitoring.launch.py
 ```
 
 2. アラートの監視：別のターミナルで以下を実行してアラートを確認
-```bash
+``` bash
 ros2 topic echo /health_alerts
 ```
 
+## 実行可能なソフトウェア
+- **Python**
+	- テスト済みバージョン: 3.7~3.10
+
+## テスト環境
+- **Ubuntu** 22.04 LTS
+
+## ライセンス
+- このソフトウェアパッケージは，3条項BSDライセンスの下，再頒布および使用が許可されます．
+- このパッケージのコードの一部は，下記のスライド（CC-BY-SA 4.0 by Ryuichi Ueda）のものを，本人の許可を得て自身の著作としたものです．
+    - [ryuichiueda/slides_marp/robosys2024](https://github.com/ryuichiueda/slides_marp/tree/master/robosys2024)
+
+ © 2025 Kohaku Hirose
 
 
