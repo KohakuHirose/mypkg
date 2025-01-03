@@ -18,9 +18,9 @@ class HealthDataPublisher(Node):
         heart_rate = random.uniform(60.0, 100.0)  # Simulated heart rate
         body_temp = random.uniform(36.0, 37.5)    # Simulated body temperature
         
-        if random.random() < 0.2:  # 20% の確率で異常な心拍数
+        if random.random() < 0.3:  # 30% の確率で異常な心拍数
             heart_rate = random.uniform(40.0, 120.0)
-        if random.random() < 0.2:  # 20% の確率で異常な体温
+        if random.random() < 0.3:  # 30% の確率で異常な体温
             body_temp = random.uniform(35.0, 39.0)
 
         heart_rate_msg = Float32()
