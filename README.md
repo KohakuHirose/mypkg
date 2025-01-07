@@ -14,7 +14,7 @@
 
 ## ノードの説明
 
-### 1. **パブリッシャーノード：HealthDataPublisher**
+### 1. **パブリッシャーノード：health_data_publisher.py**
 
 - **役割**
   - 健康データ（心拍数と体温）をシミュレーションし、以下のトピックにパブリッシュします。
@@ -28,7 +28,7 @@
     - 体温: 35.0 ～ 39.0 °C
   - タイマーで 1 秒ごとにデータを生成。
 
-### 2. **サブスクライバーノード：HealthMonitor**
+### 2. **サブスクライバーノード：health_monitor.py**
 
 - **役割**
   - 健康データを受信し、異常値を検出した場合にアラートを出力します。
@@ -42,57 +42,7 @@
     - アラートメッセージをパブリッシュ。
     - ログに警告を記録。
 
-### 3. **ローンチファイル: health_monitoring.launch.py**
-
-- **役割**:
-  パブリッシャーノード (`health_data_publisher`) とサブスクライバーノード (`health_monitor`) を同時に起動。
-
-## トピック
-
-- **`heart_rate`**:
-  - 型：`std_msgs.msg.Float32`
-  - 心拍数を送信。
-
-- **`body_temperature`**:
-  - 型：`std_msgs.msg.Float32`
-  - 体温を送信。
-
-- **`health_alerts`**:
-  - 型:：`std_msgs.msg.String`
-  - 異常値を検出した際のアラート。
-
-
 ## 実行方法
-
-### セットアップ
-
-1. ワークスペースを作成
-```bash
-mkdir -p ros2_ws/src
-cd ~/ros2_ws/src/
-```
-
-2. リポジトリをクローン
-```bash
-git clone https://github.com/KohakuHirose/mypkg.git
-```
-
-3. ワークスペースをビルド
-```bash
-cd ~/ros2_ws
-colcon build
-```
-
-4. ソースの設定
-`~/.bashrc`の末尾に2行追加
-```
-source ~/ros2_ws/install/setup.bash
-source ~/ros2_ws/install/local_setup.bash
-```
-```bash
-source ~/.bashrc
-```
-詳しくは[こちら](https://ryuichiueda.github.io/slides_marp/robosys2024/lesson8.html#22)を参考に行ってください。
 
 ### 起動
 1. ローンチファイルの実行
