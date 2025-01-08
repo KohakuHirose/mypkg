@@ -23,8 +23,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'health_data_publisher = mypkg.health_data_publisher:main',
-            'health_monitor = mypkg.health_monitor:main',
+            'health_node = mypkg.health_node:main',
         ],
     },
 )

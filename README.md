@@ -100,7 +100,9 @@ data: 'Abnormal Body Temperature Detected: 35.28 °C!'
 
 ## テスト環境
 - Ubuntu 22.04 LTS
-- Docker ryuichiueda/ubuntu22.04-ros2:latest
+
+テストに使用したコンテナ
+- ryuichiueda/ubuntu22.04-ros2:latest:
 
 ## ライセンス
 - このソフトウェアパッケージは，3条項BSDライセンスの下，再頒布および使用が許可されます．
