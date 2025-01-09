@@ -85,12 +85,9 @@ data: 'Alert: Abnormal Heart Rate: 53.40 bpm!'
 ---
 ```
 
-## 実行可能なソフトウェア
-- Python 
-    - テスト済みバージョン：3.7~3.10
-- ROS2 Foxy
 
 ## テスト環境
+- ROS2 humble
 - Ubuntu 22.04 LTS
 
 テストに使用したコンテナ
