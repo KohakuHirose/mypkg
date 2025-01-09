@@ -18,7 +18,7 @@ NODE_PID=$!
 sleep 5
 
 # メッセージを購読して異常値を検出
-timeout 30 ros2 topic echo /health_alerts > /tmp/mypkg_alerts.log
+timeout 10 ros2 topic echo /health_alerts > /tmp/mypkg_alerts.log
 
 # ノードを停止
 kill $NODE_PID
