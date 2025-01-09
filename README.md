@@ -7,89 +7,78 @@
 
 このノードシステムは、ROS2を用いて健康データ（心拍数と体温）のシミュレーションを行い、その健康データをパブリッシュするパッケージです。
 
-- 機能
-  - **データ生成**：心拍数と体温を一定間隔で生成。
-  - **異常値の監視**：範囲外の値を検出し、アラートをパブリッシュ。
-  - **ローンチファイル**：すべてのノードを一括起動。
-
 ## ノードの説明
 
-### 1. **パブリッシャーノード：health_data_publisher.py**
+### **health_node**
 
-- **役割**
-  - 健康データ（心拍数と体温）をシミュレーションし、以下のトピックにパブリッシュします。
-    - `heart_rate` (心拍数)
-    - `body_temperature` (体温)
+健康データ（心拍数と体温）をシミュレーションし、以下のトピックにパブリッシュします。
+- `heart_rate` (心拍数)
+- `body_temperature` (体温)
+- `health_alerts` (心拍数と体温、異常値の場合はアラート)
 
 - **実装のポイント**
   - 正常値をランダムに生成。
-  - **30% の確率で異常値を生成**:
-    - 心拍数: 40.0 ～ 120.0 bpm
-    - 体温: 35.0 ～ 39.0 °C
+    - 心拍数: 50.0 ～ 110.0 bpm
+    - 体温: 35.0 ～ 38.5 °C
   - タイマーで 1 秒ごとにデータを生成。
-
-### 2. **サブスクライバーノード：health_monitor.py**
-
-- **役割**
-  - 健康データを受信し、異常値を検出した場合にアラートを出力します。
-    - アラートは `health_alerts` トピックにパブリッシュされます。
-
-- **実装のポイント**
-  - **正常値の範囲**
-    - 心拍数: 60.0 ～ 100.0 bpm
-    - 体温: 36.0 ～ 37.5 °C
-  - 範囲外の値が検出された場合:
-    - アラートメッセージをパブリッシュ。
-    - ログに警告を記録。
 
 ## 実行方法
 
 ### 起動
-1. ローンチファイルの実行
+health_nodeを実行
 ```bash
-ros2 launch mypkg health_monitoring.launch.py
+$ ros2 run mypkg health_node
 ```
 
-実行結果：例1
-```
-$ ros2 launch mypkg health_monitoring.launch.py
-[INFO] [launch]: All log files can be found below /home/hirose/.ros/log/2025-01-03-19-19-39-404073-DESKTOP-N1MNJB1-7651
-[INFO] [launch]: Default logging verbosity is set to INFO
-[INFO] [health_data_publisher-1]: process started with pid [7653]
-[INFO] [health_monitor-2]: process started with pid [7655]
-[health_data_publisher-1] [INFO] [1735899580.895537398] [health_data_publisher]: Published Heart Rate: 64.42, Body Temperature: 36.25
-[health_data_publisher-1] [INFO] [1735899581.881114094] [health_data_publisher]: Published Heart Rate: 79.18, Body Temperature: 36.86
-[health_data_publisher-1] [INFO] [1735899582.881475566] [health_data_publisher]: Published Heart Rate: 80.82, Body Temperature: 36.22
-[health_data_publisher-1] [INFO] [1735899583.882422697] [health_data_publisher]: Published Heart Rate: 71.66, Body Temperature: 36.50
-[health_data_publisher-1] [INFO] [1735899584.882369431] [health_data_publisher]: Published Heart Rate: 87.89, Body Temperature: 36.09
-[health_data_publisher-1] [INFO] [1735899585.882449383] [health_data_publisher]: Published Heart Rate: 88.71, Body Temperature: 35.02
-[health_monitor-2] [WARN] [1735899585.899211087] [health_monitor]: Abnormal Body Temperature Detected: 35.02 °C!
-[health_data_publisher-1] [INFO] [1735899586.880927421] [health_data_publisher]: Published Heart Rate: 75.85, Body Temperature: 36.73
-```
-
-2. アラートの監視：別のターミナルで以下を実行してアラートを確認
+別端末でトピックを確認
 ```bash
-ros2 topic echo /health_alerts
+$ ros2 topic echo /heart_rate
+```
+```
+data: 58.64283752441406
+---
+data: 60.33660125732422
+---
+data: 75.04821014404297
+---
+data: 104.03706359863281
+---
+data: 76.83824920654297
+---
 ```
 
-実行結果：例2
+```bash
+$ ros2 topic echo /body_temperature
 ```
+```
+data: 37.47539520263672
+---
+data: 37.76638412475586
+---
+data: 35.01969909667969
+---
+data: 37.65845489501953
+---
+data: 35.83195877075195
+---
+```
+
+```bash
 $ ros2 topic echo /health_alerts
-data: 'Abnormal Body Temperature Detected: 35.56 °C!'
+```
+実行例
+```
+data: 'Alert: Abnormal Heart Rate: 108.11 bpm!'
 ---
-data: 'Abnormal Heart Rate Detected: 52.34 bpm!'
+data: 'Alert: Abnormal Body Temperature: 38.48 °C!'
 ---
-data: 'Abnormal Heart Rate Detected: 103.44 bpm!'
+data: 'Normal: Heart Rate: 80.89 bpm, Body Temperature: 36.88 °C.'
 ---
-data: 'Abnormal Body Temperature Detected: 37.68 °C!'
+data: 'Normal: Heart Rate: 68.46 bpm, Body Temperature: 36.04 °C.'
 ---
-data: 'Abnormal Heart Rate Detected: 105.72 bpm!'
+data: 'Normal: Heart Rate: 97.68 bpm, Body Temperature: 36.46 °C.'
 ---
-data: 'Abnormal Body Temperature Detected: 35.28 °C!'
----
-data: 'Abnormal Body Temperature Detected: 35.01 °C!'
----
-data: 'Abnormal Body Temperature Detected: 35.28 °C!'
+data: 'Alert: Abnormal Heart Rate: 53.40 bpm!'
 ---
 ```
 
