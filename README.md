@@ -31,6 +31,7 @@ $ ros2 run mypkg health_node
 ```
 
 別端末でトピックを確認
+- heart_rateを確認
 ```bash
 $ ros2 topic echo /heart_rate
 ```
@@ -47,6 +48,7 @@ data: 76.83824920654297
 ---
 ```
 
+- body_temperatureを確認
 ```bash
 $ ros2 topic echo /body_temperature
 ```
@@ -63,6 +65,7 @@ data: 35.83195877075195
 ---
 ```
 
+- health_alertsを確認
 ```bash
 $ ros2 topic echo /health_alerts
 ```
